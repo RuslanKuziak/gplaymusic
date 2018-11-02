@@ -33,8 +33,12 @@ public class TrackApi implements SubApi {
     if (trackID.startsWith("T")) {
       track = mainApi.getService().fetchTrack(trackID).execute().body();
     } else {
-      track = libraryTrackCache.find(trackID).orElseThrow(() ->
-          new IllegalArgumentException(String.format("No track with id '%s' found.", trackID)));
+      try {
+        track = libraryTrackCache.find(trackID).orElseThrow(() ->
+                new IllegalArgumentException(String.format("No track with id '%s' found.", trackID)));
+      } catch (Throwable throwable) {
+        throwable.printStackTrace();
+      }
     }
     if (track == null || track.getID() == null) {
       throw new IOException(String.format("'%s' did not return a valid track", trackID));

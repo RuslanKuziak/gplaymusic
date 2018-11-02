@@ -1,0 +1,56 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // For Java 8 Stream API support
+    implementation 'com.annimon:stream:1.2.1'
+
+    implementation 'com.github.bjoernpetersen:gpsoauth:0.3.2'
+    implementation 'io.gsonfire:gson-fire:1.8.3'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'javax.validation:validation-api:1.1.0.Final'
+    implementation 'com.fasterxml.uuid:java-uuid-generator:3.1.3'
+    implementation 'org.apache.tika:tika-core:1.16'
+    testImplementation 'junit:junit:4.12'
+}
+buildscript {
+    allprojects {
+        repositories {
+            jcenter { url "http://jcenter.bintray.com/" }
+        }
+    }
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+    }
+}

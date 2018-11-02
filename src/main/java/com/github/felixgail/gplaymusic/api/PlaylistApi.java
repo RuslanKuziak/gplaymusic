@@ -1,7 +1,5 @@
 package com.github.felixgail.gplaymusic.api;
 
-import static com.github.felixgail.gplaymusic.model.Playlist.BATCH_URL;
-
 import com.github.felixgail.gplaymusic.cache.Cache;
 import com.github.felixgail.gplaymusic.model.MutationResponse;
 import com.github.felixgail.gplaymusic.model.PagingHandler;
@@ -14,13 +12,17 @@ import com.github.felixgail.gplaymusic.model.requests.mutations.Mutation;
 import com.github.felixgail.gplaymusic.model.requests.mutations.MutationFactory;
 import com.github.felixgail.gplaymusic.model.requests.mutations.Mutator;
 import com.github.felixgail.gplaymusic.model.responses.ListResult;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import javax.validation.constraints.NotNull;
+
+import static com.github.felixgail.gplaymusic.model.Playlist.BATCH_URL;
 
 public class PlaylistApi implements SubApi {
 
@@ -54,9 +56,14 @@ public class PlaylistApi implements SubApi {
 
   public Playlist getPlaylist(String id) throws IOException {
     Optional<Playlist> playlistOptional = listPlaylists()
-        .stream().filter(p -> p.getId().equals(id)).findFirst();
-    return playlistOptional.orElseThrow(() ->
-        new IllegalArgumentException("This user is not subscribed to any playlist with that id."));
+            .stream().filter(p -> p.getId().equals(id)).findFirst();
+    try {
+      return playlistOptional.orElseThrow(() ->
+              new IllegalArgumentException("This user is not subscribed to any playlist with that id."));
+    } catch (Throwable throwable) {
+      throwable.printStackTrace();
+      return null;
+    }
   }
 
   /**

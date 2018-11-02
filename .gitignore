@@ -7,8 +7,13 @@ buildNumber.properties
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
+*.iml
+.gradle/
 .idea/
-gplaymusic.iml
+/build
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
 src/test/resources/gplaymusic.properties
-local_scripts/
 gplaymusic.properties
+local_scripts/

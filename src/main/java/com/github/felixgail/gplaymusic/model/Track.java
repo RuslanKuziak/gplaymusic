@@ -203,8 +203,15 @@ public class Track extends Signable implements Result, Serializable, Model {
   @Override
   public String getID() {
     return getStoreId().orElseGet(
-        () -> getUuid().orElseThrow(
-            () -> new NullPointerException("Track contains neither StoreID nor UUID.")));
+            () -> {
+              try {
+                return getUuid().orElseThrow(
+                        () -> new NullPointerException("Track contains neither StoreID nor UUID."));
+              } catch (Throwable throwable) {
+                throwable.printStackTrace();
+                return null;
+              }
+            });
   }
 
   public Optional<String> getStoreId() {
